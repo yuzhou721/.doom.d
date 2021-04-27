@@ -311,7 +311,8 @@
                        :m "T" #'evil-find-char-pinyin-to-backward
                        :m ";" #'evil-repeat-find-char-pinyin
                        :m "," #'evil-repeat-find-char-pinyin-reverse
-                       ) )
+                       )
+      )
 
 ;;配置plantuml 使用jar包
 (setq! plantuml-default-exec-mode 'jar)
@@ -349,12 +350,7 @@
             "* %U %?\n %i\n %a"
             :heading "Notes"
             :parents ("云南中烟")
-            :prepend t)
-           ("ac" "Project changelog" entry
-            (function +org-capture-central-project-changelog-file)
-            "* %U %?\n %i\n %a"
-            :parents ("云南中烟")
-            :prepend t)
+            :prepend nil)
            ("b" "京东B2B")
            ("bt" "Todo" entry
             (function +org-capture-central-project-todo-file)
@@ -368,14 +364,7 @@
             :heading "Notes"
             :parents ("京东B2B")
             :prepend t)
-
-           (function +org-capture-central-project-changelog-file)
-           "* %U %?\n %i\n %a"
-           :heading "Changelog"
-           :parents ("云南中烟")
-           :prepend t)
-         ))
-
+           )))
 
 ;;ox-hugo
 (setq! org-hugo-default-section-directory "post")

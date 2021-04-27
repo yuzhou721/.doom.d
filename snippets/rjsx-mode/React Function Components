@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: React Function Components
+# key: refc
+# --
+import React from 'react';
+
+const ${1:`(f-base buffer-file-name)`} = () => (
+  $0
+);
+
+export default $1;

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Import PropTypes
+# uuid: 
+# key: iproptypes
+# condition: t
+# --
+
+import PropTypes from 'prop-types'

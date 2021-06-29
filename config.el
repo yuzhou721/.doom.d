@@ -5,6 +5,7 @@
 ;; sync' after modifying this file!
 
 
+
 ;; Some functionality uses this to identify you, e.g. GPG configuration, email
 ;; clients, file templates and snippets.
 (setq user-full-name "yuzhou"
@@ -21,7 +22,7 @@
 ;; They all accept either a font-spec, font string ("Input Mono-12"), or xlfd
 ;; font string. You generally only need these two:
 (setq doom-font (font-spec :family "JetBrains Mono" :size 16)
-      doom-unicode-font (font-spec :family "黑体"))
+      doom-unicode-font (font-spec :family "文泉驿正黑") )
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -34,7 +35,7 @@
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'nil)
+(setq display-line-numbers-type 'relative)
 
 
 ;; Here are some additional functions/macros that could help you configure Doom:
@@ -229,7 +230,7 @@
            "%U ${body}\n"
            :file-name "${slug}"
            :head "#+title: ${title}\n#+roam_key: ${ref}\n#+roam_alias:\n"
-           :immediate-finish t
+            :immediate-finish t
            :unnarrowed t)
           ))
 
@@ -240,38 +241,38 @@
 (setq sqlformat-command 'sqlparse)
 
 ;; eaf框架引入
-;; (use-package! eaf
-;;   :load-path "~/.emacs.d/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
-;;   :init
-;;   (use-package! epc :defer t)
-;;   (use-package! ctable :defer t)
-;;   (use-package! deferred :defer t)
-;;   :custom
-;;   (eaf-browser-continue-where-left-off t)
-;;   :config
-;;   (eaf-setq eaf-browser-enable-adblocker "true")
-;;   (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-;;   (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-;;   (eaf-bind-key take_photo "p" eaf-camera-keybinding)
-;;   (eaf-bind-key nil "M-q" eaf-browser-keybinding) ;; unbind, see more in the Wiki
-;;   (require 'eaf-evil) ;;使用evil
-;;   (define-key key-translation-map (kbd "SPC")
-;;     (lambda (prompt)
-;;       (if (derived-mode-p 'eaf-mode)
-;;           (pcase eaf--buffer-app-name
-;;             ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
-;;                            (kbd "SPC")
-;;                          (kbd eaf-evil-leader-key)))
-;;             ("pdf-viewer" (kbd eaf-evil-leader-key))
-;;             ("image-viewer" (kbd eaf-evil-leader-key))
-;;             (_  (kbd "SPC")))
-;;         (kbd "SPC"))))
-;;   (defun eaf-org-open-file (file &optional link)
-;;     "An wrapper function on `eaf-open'."
-;;     (eaf-open file))
-;;   ;; use `emacs-application-framework' to open PDF file: link
-;;   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
-;;   )
+(use-package! eaf
+  :load-path "~/.emacs.d/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
+  :init
+  (use-package! epc :defer t)
+  (use-package! ctable :defer t)
+  (use-package! deferred :defer t)
+  :custom
+  (eaf-browser-continue-where-left-off t)
+  :config
+  (eaf-setq eaf-browser-enable-adblocker "true")
+  (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+  (eaf-bind-key take_photo "p" eaf-camera-keybinding)
+  (eaf-bind-key nil "M-q" eaf-browser-keybinding) ;; unbind, see more in the Wiki
+  (require 'eaf-evil) ;;使用evil
+  (define-key key-translation-map (kbd "SPC")
+    (lambda (prompt)
+      (if (derived-mode-p 'eaf-mode)
+          (pcase eaf--buffer-app-name
+            ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
+                           (kbd "SPC")
+                         (kbd eaf-evil-leader-key)))
+            ("pdf-viewer" (kbd eaf-evil-leader-key))
+            ("image-viewer" (kbd eaf-evil-leader-key))
+            (_  (kbd "SPC")))
+        (kbd "SPC"))))
+  (defun eaf-org-open-file (file &optional link)
+    "An wrapper function on `eaf-open'."
+    (eaf-open file))
+  ;; use `emacs-application-framework' to open PDF file: link
+  (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
+  )
 
 ;;protocol 添加书签以前导入url
 (require 'org-protocol)
@@ -322,12 +323,12 @@
 ;;     (org-capture-put :parents '("Projects")))
 
 (after! org
-  :custom
+  :config
   (setq! org-capture-templates
          '(
            ("t" "Personal todo" entry
             (file+headline +org-capture-todo-file "Inbox")
-            "* [ ] %?\n%i\n%a" :prepend t)
+            "* [ ] %?\n %i\n %a" :prepend t)
            ("n" "Personal notes" entry
             (file+headline +org-capture-notes-file "Inbox")
             "* %u %?\n%i\n%a" :prepend t)
@@ -338,32 +339,32 @@
            ;; these under {ProjectName}/{Tasks,Notes,Changelog} headings. They
            ;; support `:parents' to specify what headings to put them under, e.g.
            ;; :parents ("Projects")
-           ("a" "云南中烟 云智项目")
-           ("at" "Project todo" entry
+           ("a" "荣城ERP")
+           ("at" "todo" entry
             (function +org-capture-central-project-todo-file)
             "* TODO %?\n %i\n %a"
             :heading "Tasks"
-            :parents ("云南中烟")
+            :parents ("荣城ERP")
             :prepend nil)
-           ("an" "Project notes" entry
+           ("an" "notes" entry
             (function +org-capture-central-project-notes-file)
             "* %U %?\n %i\n %a"
             :heading "Notes"
-            :parents ("云南中烟")
+            :parents ("荣城ERP")
             :prepend nil)
-           ("b" "京东B2B")
-           ("bt" "Todo" entry
-            (function +org-capture-central-project-todo-file)
-            "* TODO %?\n %i\n %a"
-            :heading "Tasks"
-            :parents ("京东B2B")
-            :prepend nil)
-           ("bn" "Notes" entry
-            (function +org-capture-central-project-notes-file)
-            "* %U %?\n %i\n %a"
-            :heading "Notes"
-            :parents ("京东B2B")
-            :prepend t)
+           ;; ("b" "京东B2B")
+           ;; ("bt" "Todo" entry
+           ;;  (function +org-capture-central-project-todo-file)
+           ;;  "* TODO %?\n %i\n %a"
+           ;;  :heading "Tasks"
+           ;;  :parents ("京东B2B")
+           ;;  :prepend nil)
+           ;; ("bn" "Notes" entry
+           ;;  (function +org-capture-central-project-notes-file)
+           ;;  "* %U %?\n %i\n %a"
+           ;;  :heading "Notes"
+           ;;  :parents ("京东B2B")
+           ;;  :prepend t)
            )))
 
 ;;ox-hugo

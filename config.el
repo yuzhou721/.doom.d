@@ -187,54 +187,90 @@
 ;;("C-c r R" . gkroam-rebuild-caches)
 ;;("C-c r g" . gkroam-update))))
 
+;;   org-roam v1
+;; (use-package! org-roam
+;;   :hook
+;;   (after-init . org-roam-mode)
+;;   :custom
 ;;   (org-roam-directory "~/org/roam/")
+;;   :bind (:map org-roam-mode-map
+;;          (("C-c n l" . org-roam)
+;;           ("C-c n f" . org-roam-find-file)
+;;           ("C-c n g" . org-roam-graph)
+;;           ("C-c n c" . org-roam-capture)
+;;           )
+;;          (
+;;           ("C-c n y" . org-roam-dailies-capture-yesterday)
+;;           ("C-c n t" . org-roam-dailies-capture-today)
+;;           ("C-c n m" . org-roam-dailies-capture-tomorrow)
+;;           ("C-c n d" . org-roam-dailies-find-date)
+;;           ("C-c n n" . org-roam-dailies-find-next-note)
+;;           ("C-c n b" . org-roam-dailies-find-previous-note)
+;;           )
+;;          :map org-mode-map
+;;          (("C-c n i" . org-roam-insert))
+;;          (("C-c n I" . org-roam-insert-immediate)))
+;;   :config
+;;   (setq org-roam-capture-templates
+;;         '(
+;;           ("d" "default" plain (function org-roam--capture-get-point)
+;;            "%?"
+;;            :file-name "%<%Y%m%d%H%M%S>-${slug}"
+;;            :head "#+title: ${title}\n#+roam_alias: \n#+roam_tags: \n\n"
+;;            :unnarrowed t)
+;;           )
+;;         )
+;;   (setq org-roam-capture-ref-templates
+;;         '(
+;;           ("r" "ref" plain (function org-roam-capture--get-point)
+;;            "%?"
+;;            :file-name "${slug}"
+;;            :head "#+title: ${title}\n#+roam_key: ${ref}\n#+roam_tags: web \n"
+;;            :unnarrowed t)
+;;           ("a" "Annotation" plain (function org-roam-capture--get-point)
+;;            "${body}\n"
+;;            :file-name "${slug}"
+;;            :head "#+title: ${title}\n#+roam_key: ${ref}\n#+roam_alias:\n"
+;;             :immediate-finish t
+;;            :unnarrowed t)
+;;           ))
+
+;;   )
+;;
+;; org-roam v2
 (use-package! org-roam
-  :hook
-  (after-init . org-roam-mode)
+  :after org
   :custom
   (org-roam-directory "~/org/roam/")
-  :bind (:map org-roam-mode-map
-         (("C-c n l" . org-roam)
-          ("C-c n f" . org-roam-find-file)
-          ("C-c n g" . org-roam-graph)
-          ("C-c n c" . org-roam-capture)
-          )
-         (
-          ("C-c n y" . org-roam-dailies-capture-yesterday)
-          ("C-c n t" . org-roam-dailies-capture-today)
-          ("C-c n m" . org-roam-dailies-capture-tomorrow)
-          ("C-c n d" . org-roam-dailies-find-date)
-          ("C-c n n" . org-roam-dailies-find-next-note)
-          ("C-c n b" . org-roam-dailies-find-previous-note)
-          )
-         :map org-mode-map
-         (("C-c n i" . org-roam-insert))
-         (("C-c n I" . org-roam-insert-immediate)))
+  :bind (("C-c n l" . org-roam-buffer-toggle)
+         ("C-c n f" . org-roam-node-find)
+         ("C-c n g" . org-roam-graph)
+         ("C-c n i" . org-roam-node-insert)
+         ("C-c n c" . org-roam-capture)
+         ("C-c n T" . org-roam-dailies-capture-today))
   :config
   (setq org-roam-capture-templates
         '(
-          ("d" "default" plain (function org-roam--capture-get-point)
+          ("d" "default" plain
            "%?"
-           :file-name "%<%Y%m%d%H%M%S>-${slug}"
-           :head "#+title: ${title}\n#+roam_alias: \n#+roam_tags: \n\n"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)
           )
         )
   (setq org-roam-capture-ref-templates
         '(
-          ("r" "ref" plain (function org-roam-capture--get-point)
+          ("r" "ref" plain
            "%?"
-           :file-name "${slug}"
-           :head "#+title: ${title}\n#+roam_key: ${ref}\n#+roam_tags: web \n"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
            :unnarrowed t)
-          ("a" "Annotation" plain (function org-roam-capture--get-point)
+          ("a" "Annotation" plain
            "${body}\n"
-           :file-name "${slug}"
-           :head "#+title: ${title}\n#+roam_key: ${ref}\n#+roam_alias:\n"
-            :immediate-finish t
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           ;; :immediate-finish t
            :unnarrowed t)
           ))
-
+  :init
+  (org-roam-setup)
   )
 
 
@@ -371,7 +407,7 @@
            )))
 
 ;;ox-hugo
-(setq! org-hugo-default-section-directory "post")
+;; (setq! org-hugo-default-section-directory "post")
 
 ;; fix slow
 ;; (remove-hook 'org-mode-hook #'org-superstar-mode)

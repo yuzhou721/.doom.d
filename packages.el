@@ -61,3 +61,7 @@
 
 ;; evil f和t支持拼音
 (package! evil-find-char-pinyin)
+
+;; (package! ox-hugo
+;;     :recipe (:host github :repo "kaushalmodi/ox-hugo" :nonrecursive t)
+;;     :pin "8345ceb90f9addf99cb96a316fb24caa90ad0e77")

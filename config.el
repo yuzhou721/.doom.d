@@ -279,38 +279,38 @@
 
 ;; eaf框架引入
 (use-package! eaf
-  :load-path "~/.emacs.d/site-lisp/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
+  :load-path "~/.emacs.d/.local/straight/repos/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
   :init
   (use-package! epc :defer t)
   (use-package! ctable :defer t)
   (use-package! deferred :defer t)
-  ;; (use-package! eaf-evil :defer t)      ;
+  (use-package! eaf-evil :defer t)
   (use-package! eaf-org :defer t)
   :custom
+  (
   (eaf-browser-continue-where-left-off t)
-  :config
-  (eaf-setq eaf-browser-enable-adblocker "true")
-  (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-  (eaf-bind-key take_photo "p" eaf-camera-keybinding)
-  (eaf-bind-key nil "M-q" eaf-browser-keybinding) ;; unbind, see more in the Wiki
-  (require 'eaf-evil) ;;使用evil
-  (define-key key-translation-map (kbd "SPC")
-    (lambda (prompt)
-      (if (derived-mode-p 'eaf-mode)
-          (pcase eaf--buffer-app-name
-            ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
-                           (kbd "SPC")
-                         (kbd eaf-evil-leader-key)))
-            ("pdf-viewer" (kbd eaf-evil-leader-key))
-            ("image-viewer" (kbd eaf-evil-leader-key))
-            (_  (kbd "SPC")))
-        (kbd "SPC"))))
-  (defun eaf-org-open-file (file &optional link)
-    "An wrapper function on `eaf-open'."
-    (eaf-open file))
-  ;; use `emacs-application-framework' to open PDF file: link
-  (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
+   (eaf-setq eaf-browser-enable-adblocker "true")
+   (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
+   (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
+   (eaf-bind-key take_photo "p" eaf-camera-keybinding)
+   (eaf-bind-key nil "M-q" eaf-browser-keybinding) ;; unbind, see more in the Wiki
+   (define-key key-translation-map (kbd "SPC")
+     (lambda (prompt)
+       (if (derived-mode-p 'eaf-mode)
+           (pcase eaf--buffer-app-name
+             ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
+                            (kbd "SPC")
+                          (kbd eaf-evil-leader-key)))
+             ("pdf-viewer" (kbd eaf-evil-leader-key))
+             ("image-viewer" (kbd eaf-evil-leader-key))
+             (_  (kbd "SPC")))
+         (kbd "SPC"))))
+   (defun eaf-org-open-file (file &optional link)
+     "An wrapper function on `eaf-open'."
+     (eaf-open file))
+   ;; use `emacs-application-framework' to open PDF file: link
+   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
+   )
   )
 
 ;;protocol 添加书签以前导入url

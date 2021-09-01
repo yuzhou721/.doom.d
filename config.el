@@ -383,13 +383,13 @@
             (function +org-capture-central-project-todo-file)
             "* TODO %?\n %i\n %a"
             :heading "Tasks"
-            :parents ("荣城ERP")
+            :parents ("荣城 ERP")
             :prepend nil)
            ("an" "notes" entry
             (function +org-capture-central-project-notes-file)
             "* %U %?\n %i\n %a"
             :heading "Notes"
-            :parents ("荣城ERP")
+            :parents ("荣城 ERP")
             :prepend nil)
            ;; ("b" "京东B2B")
            ;; ("bt" "Todo" entry

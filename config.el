@@ -367,7 +367,7 @@
          '(
            ("t" "Personal todo" entry
             (file+headline +org-capture-todo-file "Inbox")
-            "* [ ] %?\n %i\n %a" :prepend t)
+            "* TODO %?\n %i\n %a" :prepend t)
            ("n" "Personal notes" entry
             (file+headline +org-capture-notes-file "Inbox")
             "* %u %?\n%i\n%a" :prepend t)
@@ -381,7 +381,7 @@
            ("a" "荣城ERP")
            ("at" "todo" entry
             (function +org-capture-central-project-todo-file)
-            "* TODO %?\n %i\n %a"
+            "* TODO [#B] %?\n %i\n %a"
             :heading "Tasks"
             :parents ("荣城 ERP")
             :prepend nil)
@@ -390,6 +390,13 @@
             "* %U %?\n %i\n %a"
             :heading "Notes"
             :parents ("荣城 ERP")
+            :prepend nil)
+           ("b" "荣城EPLUS")
+           ("bt" "todo" entry
+            (function +org-capture-central-project-todo-file)
+            "* TODO [#B] %?\n %i\n %a"
+            :heading "Tasks"
+            :parents ("荣城 EPLUS")
             :prepend nil)
            ;; ("b" "京东B2B")
            ;; ("bt" "Todo" entry

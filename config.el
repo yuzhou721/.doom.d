@@ -427,8 +427,7 @@
 ;; (global-hl-line-mode 1)
 
 ;; 翻译
-(use-package fanyi
-  :ensure t
+(use-package! fanyi
   :custom
   (fanyi-providers '(;; 海词
                      fanyi-haici-provider

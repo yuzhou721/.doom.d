@@ -67,3 +67,5 @@
 ;; eaf支持
 (package! eaf
 	 :recipe (:host github :repo "emacs-eaf/emacs-application-framework"))
+
+(package! fanyi )

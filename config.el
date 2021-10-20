@@ -59,7 +59,7 @@
 (add-hook! 'window-setup-hook #'toggle-frame-maximized)
 
 ;; add start notify
-(add-hook! 'org-pomodoro-started-hook (lambda ()(org-pomodoro-notify "Pomodoro Started" "Go!Go!Go!")))
+;; (add-hook! 'org-pomodoro-started-hook (lambda ()(org-pomodoro-notify "Pomodoro Started" "Go!Go!Go!")))
 ;; (after! org
 ;;   ;; 修复pomodoro alert无法显示问题
 ;;   (use-package! org-pomodoro
@@ -71,7 +71,7 @@
 ;;     :config
 ;;     (log4e:deflogger "alert" "%t [%l] %m" "%H:%M:%S"))
 ;;   ;;自己org配置
-;;   (defvar org-agenda-dir "" "gtd org files location")
+;;   (defvar org-agenda-
 ;;   (setq-default org-agenda-dir "~/org")
 ;;   (setq org-agenda-file-note (expand-file-name "notes.org" org-agenda-dir))
 ;;   (setq org-agenda-file-gtd (expand-file-name "gtd.org" org-agenda-dir))
@@ -279,38 +279,47 @@
 
 ;; eaf框架引入
 (use-package! eaf
-  :load-path "~/.emacs.d/.local/straight/repos/emacs-application-framework" ; Set to "/usr/share/emacs/site-lisp/eaf" if installed from AUR
-  :init
-  (use-package! epc :defer t)
-  (use-package! ctable :defer t)
-  (use-package! deferred :defer t)
-  (use-package! eaf-evil :defer t)
-  (use-package! eaf-org :defer t)
   :custom
-  (
   (eaf-browser-continue-where-left-off t)
-   (eaf-setq eaf-browser-enable-adblocker "true")
-   (eaf-bind-key scroll_up "C-n" eaf-pdf-viewer-keybinding)
-   (eaf-bind-key scroll_down "C-p" eaf-pdf-viewer-keybinding)
-   (eaf-bind-key take_photo "p" eaf-camera-keybinding)
-   (eaf-bind-key nil "M-q" eaf-browser-keybinding) ;; unbind, see more in the Wiki
-   (define-key key-translation-map (kbd "SPC")
+  (eaf-browser-enable-adblocker t)
+  (browse-url-browser-function 'eaf-open-browser)
+  :config
+    (require 'eaf-epc)
+ (require 'eaf-org)
+ (require 'eaf-demo)
+ (require 'eaf-mindmap)
+ (require 'eaf-pdf-viewer)
+ ;; (require 'eaf-mermaid)
+ (require 'eaf-camera)
+ (require 'eaf-image-viewer)
+ (require 'eaf-file-manager)
+ (require 'eaf-video-player)
+ (require 'eaf-org-previewer)
+ (require 'eaf-airshare)
+ (require 'eaf-file-browser)
+ (require 'eaf-jupyter)
+ (require 'eaf-music-player)
+ (require 'eaf-file-sender)
+ (require 'eaf-terminal)
+ (require 'eaf-vue-demo)
+ (require 'eaf-browser)
+ (require 'eaf-system-monitor)
+ (require 'eaf-netease-cloud-music)
+ (require 'eaf-markdown-previewer)
+    (use-package! eaf-evil
+      :config
+(define-key key-translation-map (kbd "SPC")
      (lambda (prompt)
        (if (derived-mode-p 'eaf-mode)
            (pcase eaf--buffer-app-name
              ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
-                            (kbd "SPC")
+                           (kbd "SPC")
                           (kbd eaf-evil-leader-key)))
              ("pdf-viewer" (kbd eaf-evil-leader-key))
              ("image-viewer" (kbd eaf-evil-leader-key))
              (_  (kbd "SPC")))
          (kbd "SPC"))))
-   (defun eaf-org-open-file (file &optional link)
-     "An wrapper function on `eaf-open'."
-     (eaf-open file))
-   ;; use `emacs-application-framework' to open PDF file: link
-   (add-to-list 'org-file-apps '("\\.pdf\\'" . eaf-org-open-file))
-   )
+      )
   )
 
 ;;protocol 添加书签以前导入url
@@ -333,7 +342,6 @@
 ;;                                                   (info  . "info")
 ;;                                                   (debug . "debug")
 ;;                                                   (trace . "trace")))
-
 
 ;; evil模式中文首字母检索
 (after! evil
@@ -359,9 +367,12 @@
 
 
 ;; (after! org-capture
-;;     (org-capture-put :parents '("Projects")))
+;;     (org-captur
 
-(after! org
+(use-package! org
+  ;; 加载任务启动通知
+  :init
+  (add-hook! org-pomodoro-started-hook (lambda ()(org-pomodoro-notify "Pomodoro Started" "Go!Go!Go!")))
   :config
   (setq! org-capture-templates
          '(
@@ -437,3 +448,13 @@
                      fanyi-etymon-provider
                      ;; Longman
                      fanyi-longman-provider)))
+
+;;auto-save
+;; (use-package! auto-save
+;;   :load-path "~/software/emacs-extends/auto-save"
+;;   :config
+;;   (setq auto-save-silent t)   ; quietly save
+;;   (setq auto-save-delete-trailing-whitespace t)
+;;   :init
+;;   (auto-save-enable)
+;;   )

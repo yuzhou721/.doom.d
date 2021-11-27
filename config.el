@@ -244,28 +244,35 @@
   (org-roam-directory "~/org/roam/")
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-graph)
+         ("C-c n g" . org-roam-ui-open)
          ("C-c n i" . org-roam-node-insert)
          ("C-c n c" . org-roam-capture)
-         ("C-c n T" . org-roam-dailies-capture-today))
+         ("C-c n T" . org-roam-dailies-capture-today)
+         ("C-c n t" . org-roam-dailies-goto-today)
+         ("C-c n n" . org-roam-dailies-goto-next-note)
+         ("C-c n p" . org-roam-dailies-goto-previous-note))
   :config
   (setq org-roam-capture-templates
         '(
           ("d" "default" plain
            "%?"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+           :unnarrowed t)
+          ("b" "book notes" plain
+           "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
            :unnarrowed t)
           )
         )
   (setq org-roam-capture-ref-templates
         '(
           ("r" "ref" plain
-           "%?"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           "* %?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:\n")
            :unnarrowed t)
           ("a" "Annotation" plain
            "${body}\n"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n")
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:\n")
            ;; :immediate-finish t
            :unnarrowed t)
           ))
@@ -284,42 +291,44 @@
   (eaf-browser-enable-adblocker t)
   (browse-url-browser-function 'eaf-open-browser)
   :config
-    (require 'eaf-epc)
- (require 'eaf-org)
- (require 'eaf-demo)
- (require 'eaf-mindmap)
- (require 'eaf-pdf-viewer)
- ;; (require 'eaf-mermaid)
- (require 'eaf-camera)
- (require 'eaf-image-viewer)
- (require 'eaf-file-manager)
- (require 'eaf-video-player)
- (require 'eaf-org-previewer)
- (require 'eaf-airshare)
- (require 'eaf-file-browser)
- (require 'eaf-jupyter)
- (require 'eaf-music-player)
- (require 'eaf-file-sender)
- (require 'eaf-terminal)
- (require 'eaf-vue-demo)
- (require 'eaf-browser)
- (require 'eaf-system-monitor)
- (require 'eaf-netease-cloud-music)
- (require 'eaf-markdown-previewer)
-    (use-package! eaf-evil
-      :config
-(define-key key-translation-map (kbd "SPC")
-     (lambda (prompt)
-       (if (derived-mode-p 'eaf-mode)
-           (pcase eaf--buffer-app-name
-             ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
-                           (kbd "SPC")
-                          (kbd eaf-evil-leader-key)))
-             ("pdf-viewer" (kbd eaf-evil-leader-key))
-             ("image-viewer" (kbd eaf-evil-leader-key))
-             (_  (kbd "SPC")))
-         (kbd "SPC"))))
-      )
+  (require 'eaf-epc)
+  (require 'eaf-org)
+  (require 'eaf-demo)
+  (require 'eaf-mindmap)
+  (require 'eaf-pdf-viewer)
+  ;; (require 'eaf-mermaid)
+  (require 'eaf-camera)
+  (require 'eaf-image-viewer)
+  (require 'eaf-file-manager)
+  (require 'eaf-video-player)
+  (require 'eaf-org-previewer)
+  (require 'eaf-airshare)
+  (require 'eaf-file-browser)
+  (require 'eaf-jupyter)
+  (require 'eaf-music-player)
+  (require 'eaf-file-sender)
+  (require 'eaf-terminal)
+  (require 'eaf-vue-demo)
+  (require 'eaf-browser)
+  (require 'eaf-system-monitor)
+  (require 'eaf-netease-cloud-music)
+  (require 'eaf-markdown-previewer)
+  (require 'eaf-rss-reader)
+  (use-package! eaf-evil
+    :config
+    (define-key key-translation-map (kbd "SPC")
+      (lambda (prompt)
+        (if (derived-mode-p 'eaf-mode)
+            (pcase eaf--buffer-app-name
+              ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
+                             (kbd "SPC")
+                           (kbd eaf-evil-leader-key)))
+              ("pdf-viewer" (kbd eaf-evil-leader-key))
+              ("image-viewer" (kbd eaf-evil-leader-key))
+              ("eaf-rss-reader" (kbd eaf-evil-leader-key))
+              (_  (kbd "SPC")))
+          (kbd "SPC"))))
+    )
   )
 
 ;;protocol 添加书签以前导入url
@@ -458,3 +467,48 @@
 ;;   :init
 ;;   (auto-save-enable)
 ;;   )
+
+;;输入法自动切换
+(use-package sis
+  :hook
+  ;; enable the /follow context/ and /inline region/ mode for specific buffers
+  (((text-mode prog-mode) . sis-context-mode)
+   ((text-mode prog-mode) . sis-inline-mode))
+
+  :config
+  ;; For MacOS
+  (sis-ism-lazyman-config
+
+   ;; English input source may be: "ABC", "US" or another one.
+   ;; "com.apple.keylayout.ABC"
+   "xkb:us::eng"
+
+   ;; Other language input source: "rime", "sogou" or another one.
+   ;; "im.rime.inputmethod.Squirrel.Rime"
+   "libpinyin" 'ibus)
+
+  ;; enable the /cursor color/ mode
+  (sis-global-cursor-color-mode t)
+  ;; enable the /respect/ mode
+  (sis-global-respect-mode t)
+  ;; enable the /context/ mode for all buffers
+  (sis-global-context-mode t)
+  ;; enable the /inline english/ mode for all buffers
+  (sis-global-inline-mode t)
+  )
+
+;;org-roam-ui使用
+(use-package! websocket
+    :after org-roam)
+
+(use-package! org-roam-ui
+    :after org-roam ;; or :after org
+;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+;;         a hookable mode anymore, you're advised to pick something yourself
+;;         if you don't care about startup time, use
+;;  :hook (after-init . org-roam-ui-mode)
+    :config
+    (setq org-roam-ui-sync-theme t
+          org-roam-ui-follow t
+          org-roam-ui-update-on-save t
+          org-roam-ui-open-on-start t))

@@ -111,3 +111,10 @@
 (package! fanyi )
 
 (package! exec-path-from-shell)
+
+;;输入法自动切换
+(package! sis)
+
+;;org-roam-ui
+(unpin! org-roam)
+(package! org-roam-ui);

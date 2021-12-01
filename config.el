@@ -470,6 +470,7 @@
 
 ;;输入法自动切换
 (use-package sis
+  :if (string= (getenv "QT_IM_MODULE") "ibus")
   :hook
   ;; enable the /follow context/ and /inline region/ mode for specific buffers
   (((text-mode prog-mode) . sis-context-mode)

@@ -286,6 +286,7 @@
 
 ;; eaf框架引入
 (use-package! eaf
+  :load-path "~/.emacs.d/.local/straight/repos/emacs-application-framework"
   :custom
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-enable-adblocker t)
@@ -314,23 +315,23 @@
   (require 'eaf-netease-cloud-music)
   (require 'eaf-markdown-previewer)
   (require 'eaf-rss-reader)
-  (use-package! eaf-evil
-    :config
-    (define-key key-translation-map (kbd "SPC")
-      (lambda (prompt)
-        (if (derived-mode-p 'eaf-mode)
-            (pcase eaf--buffer-app-name
-              ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
-                             (kbd "SPC")
-                           (kbd eaf-evil-leader-key)))
-              ("pdf-viewer" (kbd eaf-evil-leader-key))
-              ("image-viewer" (kbd eaf-evil-leader-key))
-              ("eaf-rss-reader" (kbd eaf-evil-leader-key))
-              (_  (kbd "SPC")))
-          (kbd "SPC"))))
-    )
   )
 
+(use-package! eaf-evil
+  :config
+  (define-key key-translation-map (kbd "SPC")
+    (lambda (prompt)
+      (if (derived-mode-p 'eaf-mode)
+          (pcase eaf--buffer-app-name
+            ("browser" (if (eaf-call "call_function" eaf--buffer-id "is_focus")
+                           (kbd "SPC")
+                         (kbd eaf-evil-leader-key)))
+            ("pdf-viewer" (kbd eaf-evil-leader-key))
+            ("image-viewer" (kbd eaf-evil-leader-key))
+            ("eaf-rss-reader" (kbd eaf-evil-leader-key))
+            (_  (kbd "SPC")))
+        (kbd "SPC"))))
+  )
 ;;protocol 添加书签以前导入url
 (require 'org-protocol)
 
@@ -470,7 +471,7 @@
 
 ;;输入法自动切换
 (use-package sis
-  :if (string= (getenv "QT_IM_MODULE") "ibus")
+  :if (string= (getenv "GTK_IM_MODULE") "ibus")
   :hook
   ;; enable the /follow context/ and /inline region/ mode for specific buffers
   (((text-mode prog-mode) . sis-context-mode)
@@ -500,16 +501,16 @@
 
 ;;org-roam-ui使用
 (use-package! websocket
-    :after org-roam)
+  :after org-roam)
 
 (use-package! org-roam-ui
-    :after org-roam ;; or :after org
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  :after org-roam ;; or :after org
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  ;;  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))

@@ -118,3 +118,6 @@
 ;;org-roam-ui
 (unpin! org-roam)
 (package! org-roam-ui);
+
+;;视频笔记
+(package! org-media-note :recipe (:host github :repo "yuchen-lea/org-media-note"))

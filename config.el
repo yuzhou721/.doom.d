@@ -276,6 +276,14 @@
            ;; :immediate-finish t
            :unnarrowed t)
           ))
+  (setq org-roam-dailies-capture-templates
+        `(
+          ("d" "default" entry
+           "* %?"
+           :target (file+head+olp "%<%Y-%m-%d>.org"
+                              "#+title: %<%Y-%m-%d>\n"
+                              ("间歇日志" "今日任务")))))
+
   :init
   (org-roam-setup)
   )
@@ -383,6 +391,8 @@
   ;; 加载任务启动通知
   :init
   (add-hook! org-pomodoro-started-hook (lambda ()(org-pomodoro-notify "Pomodoro Started" "Go!Go!Go!")))
+  ;; :custom
+  ;; (org-attach-id-dir "~/org/attach")
   :config
   (setq! org-capture-templates
          '(
@@ -470,12 +480,14 @@
 ;;   )
 
 ;;输入法自动切换
-(use-package sis
-  :if (string= (getenv "GTK_IM_MODULE") "ibus")
-  :hook
-  ;; enable the /follow context/ and /inline region/ mode for specific buffers
-  (((text-mode prog-mode) . sis-context-mode)
-   ((text-mode prog-mode) . sis-inline-mode))
+(use-package! sis
+  ;; :if (string= (getenv "GTK_IM_MODULE") "ibus")
+  ;; :hook
+  ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
+  ;; (
+  ;;  ((text-mode prog-mode) . sis-context-mode)
+  ;;  ((text-mode prog-mode) . sis-inline-mode)
+  ;;  )
 
   :config
   ;; For MacOS
@@ -487,13 +499,13 @@
 
    ;; Other language input source: "rime", "sogou" or another one.
    ;; "im.rime.inputmethod.Squirrel.Rime"
-   "libpinyin" 'ibus)
+   "rime" 'ibus)
 
   ;; enable the /cursor color/ mode
   (sis-global-cursor-color-mode t)
   ;; enable the /respect/ mode
   (sis-global-respect-mode t)
-  ;; enable the /context/ mode for all buffers
+
   (sis-global-context-mode t)
   ;; enable the /inline english/ mode for all buffers
   (sis-global-inline-mode t)
@@ -514,3 +526,15 @@
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
+
+;;视频笔记
+(use-package! org-media-note
+  ;; :init (setq org-media-note-use-org-ref t)
+  :hook (org-mode .  org-media-note-mode)
+  :bind (
+         ("C-c v" . org-media-note-hydra/body))  ;; 主功能入口
+  :config
+  (require 'org-attach)
+  (setq org-media-note-screenshot-image-dir "~/org/Notes/imgs/")  ;; 用于存储视频截图的目录
+  ;; (setq org-media-note-use-refcite-first t)  ;; 插入链接时，优先使用refcite链接
+  )

@@ -481,7 +481,7 @@
 
 ;;输入法自动切换
 (use-package! sis
-  ;; :if (string= (getenv "GTK_IM_MODULE") "ibus")
+   :if (string= (getenv "GTK_IM_MODULE") "ibus")
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
   ;; (

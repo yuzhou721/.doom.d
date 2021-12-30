@@ -282,7 +282,7 @@
            "* %?"
            :target (file+head+olp "%<%Y-%m-%d>.org"
                               "#+title: %<%Y-%m-%d>\n"
-                              ("间歇日志" "今日任务")))))
+                              ("间歇日志")))))
 
   :init
   (org-roam-setup)
@@ -389,9 +389,8 @@
 
 (use-package! org
   ;; 加载任务启动通知
-  :init
-  (add-hook! org-pomodoro-started-hook (lambda ()(org-pomodoro-notify "Pomodoro Started" "Go!Go!Go!")))
-  ;; :custom
+  :custom
+  (org-log-done 'time)
   ;; (org-attach-id-dir "~/org/attach")
   :config
   (setq! org-capture-templates
@@ -442,7 +441,9 @@
            ;;  :heading "Notes"
            ;;  :parents ("京东B2B")
            ;;  :prepend t)
-           )))
+           ))
+  (add-hook! org-pomodoro-started-hook (lambda ()(org-pomodoro-notify "Pomodoro Started" "Go!Go!Go!")))
+  )
 
 ;;ox-hugo
 ;; (setq! org-hugo-default-section-directory "post")

@@ -471,14 +471,13 @@
                      fanyi-longman-provider)))
 
 ;;auto-save
-;; (use-package! auto-save
-;;   :load-path "~/software/emacs-extends/auto-save"
-;;   :config
-;;   (setq auto-save-silent t)   ; quietly save
-;;   (setq auto-save-delete-trailing-whitespace t)
-;;   :init
-;;   (auto-save-enable)
-;;   )
+(use-package! auto-save
+  ;; :load-path "~/software/emacs-extends/auto-save"
+  :config
+  (setq auto-save-silent t)   ; quietly save
+  (setq auto-save-delete-trailing-whitespace t)
+  (auto-save-enable)
+  )
 
 ;;输入法自动切换
 (use-package! sis

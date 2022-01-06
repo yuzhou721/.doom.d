@@ -125,3 +125,6 @@
 
 ;;视频笔记
 (package! org-media-note :recipe (:host github :repo "yuchen-lea/org-media-note"))
+
+;;自动保存
+(package! auto-save :recipe (:host github :repo "manateelazycat/auto-save" ))

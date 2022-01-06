@@ -65,45 +65,49 @@
 
 ;;
 ;; eaf支持
-(straight-use-package
- '(eaf
-   :host github
-   :repo "emacs-eaf/emacs-application-framework"
-   :files (:defaults "eaf.py" "setup.py" "install-eaf.py" "core" "extension" "app" "*.el" )
-   )
- )
+;; (straight-use-package
+;;  '(eaf
+;;    :host github
+;;    :repo "emacs-eaf/emacs-application-framework"
+;;    :files (:defaults "eaf.py" "setup.py" "install-eaf.py" "core" "extension" "app" "*.el" )
+;;    )
+;;  )
+(package! eaf
+  ;; :recipe (
+  ;;          ;; :local-repo "~/emacs-application-framework"
+  ;;          :files (
+  ;;                  "*.el"
+  ;;                  "core/*.el"
+  ;;                  "extension/*.el"
+  ;;                  "app/demo/*.el"
+  ;;                  "app/mindmap/*el"
+  ;;                  "app/music-player/*el"
+  ;;                  "app/video-player/*el"
+  ;;                  "app/file-browser/*el"
+  ;;                  "app/airshare/*el"
+  ;;                  "app/browser/*el"
+  ;;                  "app/file-manager/*el"
+  ;;                  "app/file-sender/*el"
+  ;;                  "app/image-viewer/*el"
+  ;;                  "app/markdown-previewer/*el"
+  ;;                  "app/browser/*el"
+  ;;                  "app/pdf-viewer/*el"
+  ;;                  "app/image-viewer/*el"
+  ;;                  "app/terminal/*el"
+  ;;                  "app/org-previewer/*el"
+  ;;                  "app/system-monitor/*el"
+  ;;                  )
+  ;;          )
+  )
 ;; (package! eaf
-;;   :recipe (:local-repo "~/emacs-application-framework"
-;;            :files (
-;;                    "*.el"
-;;                    "core/*.el"
-;;                    "extension/*.el"
-;;                    "app/demo/*.el"
-;;                    "app/mindmap/*el"
-;;                    "app/music-player/*el"
-;;                    "app/video-player/*el"
-;;                    "app/file-browser/*el"
-;;                    "app/airshare/*el"
-;;                    "app/browser/*el"
-;;                    "app/file-manager/*el"
-;;                    "app/file-sender/*el"
-;;                    "app/image-viewer/*el"
-;;                    "app/markdown-previewer/*el"
-;;                    "app/browser/*el"
-;;                    "app/pdf-viewer/*el"
-;;                    "app/image-viewer/*el"
-;;                    "app/terminal/*el"
-;;                    "app/org-previewer/*el"
-;;                    "app/system-monitor/*el"
-;;                    )
-;;            ))
-;; (package! eaf
-;;   :recipe (:local-repo "~/.emacs.d/site-lisp/emacs-application-framework"
+;;   :recipe (
+;;            ;; :local-repo "~/.emacs.d/site-lisp/emacs-application-framework"
 ;;            :files (
 ;;                    "*.el"
 ;;                    "core"
 ;;                    "extension"
 ;;                    "app"
+;;                    "*.py"
 ;;                    )
 ;;            ))
 

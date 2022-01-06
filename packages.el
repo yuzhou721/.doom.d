@@ -117,7 +117,7 @@
 
 ;;org-roam-ui
 (unpin! org-roam)
-(package! org-roam-ui);
+(package! org-roam-ui :recipe (:files ("*.el" "out")));
 
 ;;视频笔记
 (package! org-media-note :recipe (:host github :repo "yuchen-lea/org-media-note"))

@@ -281,8 +281,8 @@
           ("d" "default" entry
            "* %?"
            :target (file+head+olp "%<%Y-%m-%d>.org"
-                              "#+title: %<%Y-%m-%d>\n"
-                              ("间歇日志")))))
+                                  "#+title: %<%Y-%m-%d>\n"
+                                  ("间歇日志")))))
 
   :init
   (org-roam-setup)
@@ -294,14 +294,12 @@
 
 ;; eaf框架引入
 (use-package! eaf
-  :load-path "~/.emacs.d/.local/straight/repos/emacs-application-framework"
+  ;; :load-path "~/.emacs.d/.local/straight/repos/emacs-application-framework"
   :custom
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-enable-adblocker t)
   (browse-url-browser-function 'eaf-open-browser)
   :config
-  (require 'eaf-epc)
-  (require 'eaf-org)
   (require 'eaf-demo)
   (require 'eaf-mindmap)
   (require 'eaf-pdf-viewer)
@@ -315,6 +313,7 @@
   (require 'eaf-file-browser)
   (require 'eaf-jupyter)
   (require 'eaf-music-player)
+  (require 'eaf-rss-reader)
   (require 'eaf-file-sender)
   (require 'eaf-terminal)
   (require 'eaf-vue-demo)
@@ -322,7 +321,6 @@
   (require 'eaf-system-monitor)
   (require 'eaf-netease-cloud-music)
   (require 'eaf-markdown-previewer)
-  (require 'eaf-rss-reader)
   )
 
 (use-package! eaf-evil
@@ -483,7 +481,7 @@
 
 ;;输入法自动切换
 (use-package! sis
-   :if (string= (getenv "GTK_IM_MODULE") "ibus")
+  :if (string= (getenv "GTK_IM_MODULE") "ibus")
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
   ;; (

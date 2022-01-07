@@ -72,7 +72,7 @@
 ;;    :files (:defaults "eaf.py" "setup.py" "install-eaf.py" "core" "extension" "app" "*.el" )
 ;;    )
 ;;  )
-(package! eaf
+;; (package! eaf
   ;; :recipe (
   ;;          ;; :local-repo "~/emacs-application-framework"
   ;;          :files (
@@ -98,7 +98,7 @@
   ;;                  "app/system-monitor/*el"
   ;;                  )
   ;;          )
-  )
+  ;; )
 ;; (package! eaf
 ;;   :recipe (
 ;;            ;; :local-repo "~/.emacs.d/site-lisp/emacs-application-framework"
@@ -110,7 +110,12 @@
 ;;                    "*.py"
 ;;                    )
 ;;            ))
-
+;;
+(package! eaf :recipe
+  (:host github
+   :repo "manateelazycat/emacs-application-framework"
+   :files ("*")
+   :build (:not compile))) ;; specify not to compile files
 
 (package! fanyi )
 

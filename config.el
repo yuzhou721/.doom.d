@@ -473,6 +473,8 @@
 ;;auto-save
 (use-package! auto-save
   ;; :load-path "~/software/emacs-extends/auto-save"
+  :custom
+  (auto-save-idle 60)
   :config
   (setq auto-save-silent t)   ; quietly save
   (setq auto-save-delete-trailing-whitespace t)

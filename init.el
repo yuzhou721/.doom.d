@@ -24,13 +24,16 @@
         +childframe
         ;; +tng
         )           ; the ultimate code completion backend
-       ;;helm              ; the *other* search engine for love and life
-       ;;ido               ; the other *other* search engine...
-       (ivy
-        +childframe
-        ;; +prescient
+       (helm              ; the *other* search engine for love and life
         +fuzzy
-        )               ; a search engine for love and life
+        +childframe
+        +icon
+        )
+       ;;ido               ; the other *other* search engine...
+       ;; (ivy
+       ;;  +childframe
+        ;; +fuzzy
+        ;; )               ; a search engine for love and life
 
        :ui
        ;;deft              ; notational velocity for Emacs

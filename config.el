@@ -426,6 +426,18 @@
             :heading "Tasks"
             :parents ("荣城 EPLUS")
             :prepend nil)
+           ("bn" "notes" entry
+            (function +org-capture-central-project-notes-file)
+            "* %U %?\n %i\n %a"
+            :heading "Notes"
+            :parents ("荣城 EPLUS")
+            :prepend nil)
+           ("bc" "changelog" entry
+            (function +org-capture-central-project-changelog-file)
+            "* %U %?\n %i\n %a"
+            :heading "Changelog"
+            :parents ("荣城 EPLUS")
+            :prepend t)
            ;; ("b" "京东B2B")
            ;; ("bt" "Todo" entry
            ;;  (function +org-capture-central-project-todo-file)

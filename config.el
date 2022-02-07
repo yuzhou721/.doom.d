@@ -550,3 +550,8 @@
   (setq org-media-note-screenshot-image-dir "~/org/Notes/imgs/")  ;; 用于存储视频截图的目录
   ;; (setq org-media-note-use-refcite-first t)  ;; 插入链接时，优先使用refcite链接
   )
+
+;;文档注释
+(use-package! docstr
+  :config
+  (global-docstr-mode 1))

@@ -280,9 +280,9 @@
         `(
           ("d" "default" entry
            "* %?"
-           :target (file+head+olp "%<%Y-%m-%d>.org"
-                                  "#+title: %<%Y-%m-%d>\n"
-                                  ("间歇日志")))))
+           :target (file+head "%<%Y-%m-%d>.org"
+                                  "#+title: %<%Y-%m-%d>\n#+filetags: :resource:\n"
+                                  ))))
 
   :init
   (org-roam-setup)
@@ -418,7 +418,7 @@
             "* %U %?\n %i\n %a"
             :heading "Notes"
             :parents ("荣城 ERP")
-            :prepend nil)
+            :prepend t)
            ("b" "荣城EPLUS")
            ("bt" "todo" entry
             (function +org-capture-central-project-todo-file)
@@ -431,7 +431,7 @@
             "* %U %?\n %i\n %a"
             :heading "Notes"
             :parents ("荣城 EPLUS")
-            :prepend nil)
+            :prepend t)
            ("bc" "changelog" entry
             (function +org-capture-central-project-changelog-file)
             "* %U %?\n %i\n %a"
@@ -549,3 +549,8 @@
   (setq org-media-note-screenshot-image-dir "~/org/Notes/imgs/")  ;; 用于存储视频截图的目录
   ;; (setq org-media-note-use-refcite-first t)  ;; 插入链接时，优先使用refcite链接
   )
+
+;;文档注释
+(use-package! docstr
+  :config
+  (global-docstr-mode 1))

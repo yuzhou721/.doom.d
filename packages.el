@@ -133,3 +133,6 @@
 
 ;;自动保存
 (package! auto-save :recipe (:host github :repo "manateelazycat/auto-save" ))
+
+;;文档注释
+(package! docstr)

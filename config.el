@@ -493,7 +493,7 @@
 
 ;;输入法自动切换
 (use-package! sis
-  :if (string= (getenv "GTK_IM_MODULE") "ibus")
+  :if (or (string= (getenv "GTK_IM_MODULE") "ibus") IS-MAC)
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
   ;; (
@@ -503,15 +503,14 @@
 
   :config
   ;; For MacOS
-  (sis-ism-lazyman-config
-
-   ;; English input source may be: "ABC", "US" or another one.
-   ;; "com.apple.keylayout.ABC"
-   "xkb:us::eng"
-
-   ;; Other language input source: "rime", "sogou" or another one.
-   ;; "im.rime.inputmethod.Squirrel.Rime"
-   "rime" 'ibus)
+  (IS-MAC
+   (sis-ism-lazyman-config
+    "xkb:us::eng"
+    "rime" 'ibus)
+   (sis-ism-lazyman-config
+    "com.apple.keylayout.ABC"
+    "com.sogou.inputmethod.sogou.pinyin" 'macism)
+   )
 
   ;; enable the /cursor color/ mode
   (sis-global-cursor-color-mode t)

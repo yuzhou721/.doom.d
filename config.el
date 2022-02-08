@@ -294,7 +294,7 @@
 
 ;; eaf框架引入
 (use-package! eaf
-  ;; :load-path "~/.emacs.d/.local/straight/repos/emacs-application-framework"
+  :load-path "~/.emacs.d/.local/straight/repos/emacs-application-framework"
   :custom
   (eaf-browser-continue-where-left-off t)
   (eaf-browser-enable-adblocker t)

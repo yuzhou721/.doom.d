@@ -505,11 +505,11 @@
   ;; For MacOS
   (IS-MAC
    (sis-ism-lazyman-config
-    "xkb:us::eng"
-    "rime" 'ibus)
-   (sis-ism-lazyman-config
     "com.apple.keylayout.ABC"
     "com.sogou.inputmethod.sogou.pinyin" 'macism)
+   (sis-ism-lazyman-config
+    "xkb:us::eng"
+    "rime" 'ibus)
    )
 
   ;; enable the /cursor color/ mode

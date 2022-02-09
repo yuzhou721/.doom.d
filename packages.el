@@ -113,7 +113,7 @@
 ;;
 (package! eaf :recipe
   (:host github
-   :repo "manateelazycat/emacs-application-framework"
+   :repo "emacs-eaf/emacs-application-framework"
    :files ("*")
    :build (:not compile))) ;; specify not to compile files
 

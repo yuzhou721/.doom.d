@@ -136,3 +136,6 @@
 
 ;;文档注释
 (package! docstr)
+
+;;habitica
+(package! habitica)

@@ -244,26 +244,38 @@
   (org-roam-directory "~/org/roam/")
   :bind (("C-c n l" . org-roam-buffer-toggle)
          ("C-c n f" . org-roam-node-find)
-         ("C-c n g" . org-roam-ui-open)
          ("C-c n i" . org-roam-node-insert)
-         ("C-c n c" . org-roam-capture)
-         ("C-c n T" . org-roam-dailies-capture-today)
-         ("C-c n t" . org-roam-dailies-goto-today)
-         ("C-c n n" . org-roam-dailies-goto-next-note)
-         ("C-c n p" . org-roam-dailies-goto-previous-note))
+         ("C-c n g" . org-roam-ui-open)
+         :map org-mode-map
+         ("C-M-i" . completion-at-point)
+         :map org-roam-dailies-map
+         ("Y" . org-roam-dailies-capture-yesterday)
+         ("T" . org-roam-dailies-capture-tomorrow))
+  :bind-keymap
+  ("C-c n d" . org-roam-dailies-map)
+  ;; :bind (("C-c n l" . org-roam-buffer-toggle)
+  ;;        ("C-c n f" . org-roam-node-find)
+  ;;        ("C-c n g" . org-roam-ui-open)
+  ;;        ("C-c n i" . org-roam-node-insert)
+  ;;        ("C-c n c" . org-roam-capture)
+  ;;        ("C-c n T" . org-roam-dailies-capture-today)
+  ;;        ("C-c n t" . org-roam-dailies-goto-today)
+  ;;        ("C-c n n" . org-roam-dailies-goto-next-note)
+  ;;        ("C-c n p" . org-roam-dailies-goto-previous-note))
   :config
-  (setq org-roam-capture-templates
-        '(
-          ("d" "default" plain
-           "%?"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
-           :unnarrowed t)
-          ("b" "book notes" plain
-           "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
-           :unnarrowed t)
-          )
-        )
+  (require 'org-roam-dailies)
+  ;; (setq org-roam-capture-templates
+  ;;       '(
+  ;;         ("d" "default" plain
+  ;;          "%?"
+  ;;          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+  ;;          :unnarrowed t)
+  ;;         ("b" "book notes" plain
+  ;;          "\n* Source\n\nAuthor: %^{Author}\nTitle: ${title}\nYear: %^{Year}\n\n* Summary\n\n%?"
+  ;;          :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n")
+  ;;          :unnarrowed t)
+  ;;         )
+  ;;       )
   (setq org-roam-capture-ref-templates
         '(
           ("r" "ref" plain
@@ -281,8 +293,8 @@
           ("d" "default" entry
            "* %?"
            :target (file+head "%<%Y-%m-%d>.org"
-                                  "#+title: %<%Y-%m-%d>\n#+filetags: :resource:\n"
-                                  ))))
+                              "#+title: %<%Y-%m-%d>\n#+filetags: :resource:\n"
+                              ))))
 
   :init
   (org-roam-setup)
@@ -503,14 +515,14 @@
 
   :config
   ;; For MacOS
-  (IS-MAC
-   (sis-ism-lazyman-config
-    "com.apple.keylayout.ABC"
-    "com.sogou.inputmethod.sogou.pinyin" 'macism)
-   (sis-ism-lazyman-config
-    "xkb:us::eng"
-    "rime" 'ibus)
-   )
+  (if IS-MAC
+      (sis-ism-lazyman-config
+       "com.apple.keylayout.ABC"
+       "com.sogou.inputmethod.sogou.pinyin" 'macism)
+    (sis-ism-lazyman-config
+     "xkb:us::eng"
+     "libpinyin" 'ibus)
+    )
 
   ;; enable the /cursor color/ mode
   (sis-global-cursor-color-mode t)
@@ -554,3 +566,9 @@
 (use-package! docstr
   :config
   (global-docstr-mode 1))
+
+(use-package! habitica
+  :custom
+  (habitica-uid "aae41ff9-302c-45eb-958b-761b30e59ef2")
+  (habitica-token "72b0b8fb-f688-40f3-b773-fe812e5557b8")
+  )

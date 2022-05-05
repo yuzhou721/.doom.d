@@ -139,3 +139,17 @@
 
 ;;habitica
 (package! habitica)
+
+;;pyim-tsinghua-dict
+(package! pyim-tsinghua-dict
+  :recipe
+  (:host github
+   :repo "redguardtoo/pyim-tsinghua-dict"
+  :files ("*")
+  :build (:not compile)))
+
+(package! sort-tab
+  :recipe (
+           :host github
+           :repo "manateelazycat/sort-tab"
+           ))

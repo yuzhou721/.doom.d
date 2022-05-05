@@ -573,3 +573,44 @@
   (habitica-uid "aae41ff9-302c-45eb-958b-761b30e59ef2")
   (habitica-token "72b0b8fb-f688-40f3-b773-fe812e5557b8")
   )
+
+;;pyim设置
+(after! pyim
+  (map! "C-\\" #'toggle-input-method)
+  (map! :map org-mode-map "C-i" 'pyim-convert-string-at-point)
+  (setq pyim-page-tooltip 'posframe)
+  (setq-default pyim-english-input-switch-functions
+                '(pyim-probe-dynamic-english
+                  pyim-probe-org-speed-commands
+                  pyim-probe-isearch-mode
+                  pyim-probe-program-mode
+                  pyim-probe-org-structure-template))
+  (setq-default pyim-punctuation-half-width-functions
+                '(pyim-probe-punctuation-line-beginning
+                  pyim-probe-punctuation-after-punctuation))
+  (setq-default pyim-punctuation-translate-p '(auto yes no))
+  (pyim-isearch-mode 1)
+  (setq pyim-page-length 5)
+  (use-package! pyim-tsinghua-dict
+    :config
+    (pyim-tsinghua-dict-enable))
+  )
+
+;;sort-tab
+(use-package! sort-tab
+  :config
+  (sort-tab-mode 1)
+  :bind (
+         ("s-1" . sort-tab-select-visible-tab)
+         ("s-2" . sort-tab-select-visible-tab)
+         ("s-3" . sort-tab-select-visible-tab)
+         ("s-4" . sort-tab-select-visible-tab)
+         ("s-5" . sort-tab-select-visible-tab)
+         ("s-6" . sort-tab-select-visible-tab)
+         ("s-7" . sort-tab-select-visible-tab)
+         ("s-8" . sort-tab-select-visible-tab)
+         ("s-9" . sort-tab-select-visible-tab)
+         ("s-c" . sort-tab-close-mode-tabs)
+         ("s-C" . sort-tab-close-all-tabs)
+         ("C-;" . sort-tab-close-current-tab)
+         ))

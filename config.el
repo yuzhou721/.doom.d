@@ -505,6 +505,7 @@
 
 ;;输入法自动切换
 (use-package! sis
+  :disabled t
   :if (or (string= (getenv "GTK_IM_MODULE") "ibus") IS-MAC)
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers

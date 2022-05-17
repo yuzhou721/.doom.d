@@ -505,6 +505,7 @@
 
 ;;输入法自动切换
 (use-package! sis
+  :disabled t
   :if (or (string= (getenv "GTK_IM_MODULE") "ibus") IS-MAC)
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
@@ -548,7 +549,7 @@
   (setq org-roam-ui-sync-theme t
         org-roam-ui-follow t
         org-roam-ui-update-on-save t
-        org-roam-ui-open-on-start t))
+        org-roam-ui-open-on-start nil))
 
 ;;视频笔记
 (use-package! org-media-note
@@ -572,3 +573,26 @@
   (habitica-uid "aae41ff9-302c-45eb-958b-761b30e59ef2")
   (habitica-token "72b0b8fb-f688-40f3-b773-fe812e5557b8")
   )
+
+;;pyim设置
+(after! pyim
+  (map! "C-\\" #'toggle-input-method)
+  (map! :map org-mode-map "C-i" 'pyim-convert-string-at-point)
+  (setq pyim-page-tooltip 'posframe)
+  (setq-default pyim-english-input-switch-functions
+                '(pyim-probe-dynamic-english
+                  pyim-probe-org-speed-commands
+                  pyim-probe-isearch-mode
+                  pyim-probe-program-mode
+                  pyim-probe-org-structure-template))
+  (setq-default pyim-punctuation-half-width-functions
+                '(pyim-probe-punctuation-line-beginning
+                  pyim-probe-punctuation-after-punctuation))
+  (setq-default pyim-punctuation-translate-p '(auto yes no))
+  (pyim-isearch-mode 1)
+  (setq pyim-page-length 5)
+  (use-package! pyim-tsinghua-dict
+    :config
+    (pyim-tsinghua-dict-enable))
+  )
+

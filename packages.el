@@ -148,8 +148,4 @@
   :files ("*")
   :build (:not compile)))
 
-(package! sort-tab
-  :recipe (
-           :host github
-           :repo "manateelazycat/sort-tab"
-           ))
+(package! valign)

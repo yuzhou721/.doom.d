@@ -596,21 +596,3 @@
     (pyim-tsinghua-dict-enable))
   )
 
-;;sort-tab
-(use-package! sort-tab
-  :config
-  (sort-tab-mode 1)
-  :bind (
-         ("s-1" . sort-tab-select-visible-tab)
-         ("s-2" . sort-tab-select-visible-tab)
-         ("s-3" . sort-tab-select-visible-tab)
-         ("s-4" . sort-tab-select-visible-tab)
-         ("s-5" . sort-tab-select-visible-tab)
-         ("s-6" . sort-tab-select-visible-tab)
-         ("s-7" . sort-tab-select-visible-tab)
-         ("s-8" . sort-tab-select-visible-tab)
-         ("s-9" . sort-tab-select-visible-tab)
-         ("s-c" . sort-tab-close-mode-tabs)
-         ("s-C" . sort-tab-close-all-tabs)
-         ("C-;" . sort-tab-close-current-tab)
-         ))

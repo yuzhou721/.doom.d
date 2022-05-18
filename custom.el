@@ -40,7 +40,10 @@
     (cons 320 "#886d6f")
     (cons 340 "#4C4A4D")
     (cons 360 "#4C4A4D")))
- '(vc-annotate-very-old-color nil))
+ '(vc-annotate-very-old-color nil)
+ '(warning-suppress-types
+   '((org-element-cache)
+     )))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

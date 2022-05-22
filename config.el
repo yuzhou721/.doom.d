@@ -555,7 +555,7 @@
 (use-package! org-media-note
   ;; :init (setq org-media-note-use-org-ref t)
   :hook (org-mode .  org-media-note-mode)
-  :bind (
+  :bind (:map org-mode-map
          ("C-c v" . org-media-note-hydra/body))  ;; 主功能入口
   :config
   (require 'org-attach)

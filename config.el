@@ -595,4 +595,3 @@
     :config
     (pyim-tsinghua-dict-enable))
   )
-

@@ -576,22 +576,21 @@
 
 ;;pyim设置
 (after! pyim
-  (map! "C-\\" #'toggle-input-method)
-  (map! :map org-mode-map "C-i" 'pyim-convert-string-at-point)
+  (map! "C-i" 'pyim-convert-string-at-point)
   (setq pyim-page-tooltip 'posframe)
   (setq-default pyim-english-input-switch-functions
                 '(pyim-probe-dynamic-english
                   pyim-probe-org-speed-commands
                   pyim-probe-isearch-mode
-                  pyim-probe-program-mode
-                  pyim-probe-org-structure-template))
+                  pyim-probe-program-mode))
   (setq-default pyim-punctuation-half-width-functions
                 '(pyim-probe-punctuation-line-beginning
                   pyim-probe-punctuation-after-punctuation))
   (setq-default pyim-punctuation-translate-p '(auto yes no))
   (pyim-isearch-mode 1)
   (setq pyim-page-length 5)
-  (use-package! pyim-tsinghua-dict
-    :config
-    (pyim-tsinghua-dict-enable))
   )
+(use-package! pyim-tsinghua-dict
+  :after pyim
+  :config
+  (pyim-tsinghua-dict-enable))

@@ -129,6 +129,7 @@
 (package! org-roam-ui :recipe (:files ("*.el" "out")));
 
 ;;视频笔记
+(package! pretty-hydra)  ;; dependency
 (package! org-media-note :recipe (:host github :repo "yuchen-lea/org-media-note"))
 
 ;;自动保存

@@ -576,7 +576,10 @@
 
 ;;pyim设置
 (after! pyim
-  (map! "C-i" 'pyim-convert-string-at-point)
+  (map! :mode org-mode
+        :i "C-i" #'pyim-convert-string-at-point)
+  (map! :map minibuffer-local-map
+        "C-RET" #'pyim-cregexp-convert-at-point)
   (setq pyim-page-tooltip 'posframe)
   (setq-default pyim-english-input-switch-functions
                 '(pyim-probe-dynamic-english

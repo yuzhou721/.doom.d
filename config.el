@@ -576,7 +576,7 @@
 
 ;;pyim设置
 (after! pyim
-  (map! :mode org-mode
+  (map! :map evil-org-mode-map
         :i "C-i" #'pyim-convert-string-at-point)
   (map! :map minibuffer-local-map
         "C-RET" #'pyim-cregexp-convert-at-point)

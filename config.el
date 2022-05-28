@@ -575,23 +575,24 @@
   )
 
 ;;pyim设置
+(map! :after evil-org :map evil-org-mode-map
+      :i "C-i" #'pyim-convert-string-at-point)
+(map! :map minibuffer-local-map
+      "C-RET" #'pyim-cregexp-convert-at-point)
 (after! pyim
-  (map! :map evil-org-mode-map
-        :i "C-i" #'pyim-convert-string-at-point)
-  (map! :map minibuffer-local-map
-        "C-RET" #'pyim-cregexp-convert-at-point)
-  (setq pyim-page-tooltip 'posframe)
-  (setq-default pyim-english-input-switch-functions
-                '(pyim-probe-dynamic-english
-                  pyim-probe-org-speed-commands
-                  pyim-probe-isearch-mode
-                  pyim-probe-program-mode))
-  (setq-default pyim-punctuation-half-width-functions
-                '(pyim-probe-punctuation-line-beginning
-                  pyim-probe-punctuation-after-punctuation))
-  (setq-default pyim-punctuation-translate-p '(auto yes no))
+  (setq! pyim-page-tooltip 'posframe)
+  (setq! pyim-english-input-switch-functions
+         '(pyim-probe-dynamic-english
+           pyim-probe-org-speed-commands
+           pyim-probe-isearch-mode
+           pyim-probe-program-mode))
+  (setq! pyim-punctuation-half-width-functions
+         '(pyim-probe-punctuation-line-beginning
+           pyim-probe-punctuation-after-punctuation))
+  (setq! pyim-punctuation-translate-p '(auto yes no))
   (pyim-isearch-mode 1)
-  (setq pyim-page-length 5)
+  (setq! pyim-page-length 5)
+  (setq! pyim-cloudim 'baidu)
   )
 (use-package! pyim-tsinghua-dict
   :after pyim

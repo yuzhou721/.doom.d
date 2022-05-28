@@ -149,4 +149,7 @@
   :files ("*")
   :build (:not compile)))
 
+;;解除版本限制 使用云拼音
+(unpin! pyim)
+
 (package! valign)

@@ -505,8 +505,6 @@
 
 ;;输入法自动切换
 (use-package! sis
-  :disabled t
-  :if (or (string= (getenv "GTK_IM_MODULE") "ibus") IS-MAC)
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
   ;; (
@@ -516,14 +514,12 @@
 
   :config
   ;; For MacOS
-  (if IS-MAC
-      (sis-ism-lazyman-config
-       "com.apple.keylayout.ABC"
-       "com.sogou.inputmethod.sogou.pinyin" 'macism)
-    (sis-ism-lazyman-config
-     "xkb:us::eng"
-     "libpinyin" 'ibus)
-    )
+  (cond ((string= (getenv "GTK_IM_MODULE") "ibus")
+         (sis-ism-lazyman-config "xkb:us::eng" "libpinyin" 'ibus))
+        ((string= (getenv "GTK_IM_MODULE") "fcitx")
+         (sis-ism-lazyman-config "1" "2" 'fcitx5))
+        (IS-MAC
+         (sis-ism-lazyman-config "com.apple.keylayout.ABC" "com.sogou.inputmethod.sogou.pinyin" 'macism )))
 
   ;; enable the /cursor color/ mode
   (sis-global-cursor-color-mode t)
@@ -558,7 +554,7 @@
   :bind (:map org-mode-map
          ("C-c v" . org-media-note-hydra/body))  ;; 主功能入口
   :config
-  (require 'org-attach)
+
   (setq org-media-note-screenshot-image-dir "~/org/Notes/imgs/")  ;; 用于存储视频截图的目录
   ;; (setq org-media-note-use-refcite-first t)  ;; 插入链接时，优先使用refcite链接
   )
@@ -575,26 +571,29 @@
   )
 
 ;;pyim设置
-(map! :after evil-org :map evil-org-mode-map
-      :i "C-i" #'pyim-convert-string-at-point)
-(map! :map minibuffer-local-map
-      "C-RET" #'pyim-cregexp-convert-at-point)
-(after! pyim
-  (setq! pyim-page-tooltip 'posframe)
-  (setq! pyim-english-input-switch-functions
-         '(pyim-probe-dynamic-english
-           pyim-probe-org-speed-commands
-           pyim-probe-isearch-mode
-           pyim-probe-program-mode))
-  (setq! pyim-punctuation-half-width-functions
-         '(pyim-probe-punctuation-line-beginning
-           pyim-probe-punctuation-after-punctuation))
-  (setq! pyim-punctuation-translate-p '(auto yes no))
-  (pyim-isearch-mode 1)
-  (setq! pyim-page-length 5)
-  (setq! pyim-cloudim 'baidu)
-  )
-(use-package! pyim-tsinghua-dict
-  :after pyim
-  :config
-  (pyim-tsinghua-dict-enable))
+;; (map! :after evil-org :map evil-org-mode-map
+;;       :i "C-i" #'pyim-convert-string-at-point)
+;; (map! :map minibuffer-local-map
+;;       "C-RET" #'pyim-cregexp-convert-at-point)
+;; (after! pyim
+;;   (setq! pyim-page-tooltip 'posframe)
+;;   (setq! pyim-english-input-switch-functions
+;;          '(pyim-probe-dynamic-english
+;;            pyim-probe-org-speed-commands
+;;            pyim-probe-isearch-mode
+;;            pyim-probe-program-mode))
+;;   (setq-default pyim-punctuation-half-width-functions
+;;                 '(pyim-probe-punctuation-line-beginning
+;;                   pyim-probe-punctuation-after-punctuation))
+;;   (setq! pyim-punctuation-translate-p '(auto yes no))
+;;   (pyim-isearch-mode 1)
+;;   (setq! pyim-page-length 5)
+  ;;cloudim 卡顿 禁用 测试
+  ;; (setq! pyim-cloudim 'baidu)
+
+  ;; 字典
+  ;; (use-package! pyim-tsinghua-dict
+  ;;   :after pyim
+  ;;   :config
+  ;;   (pyim-tsinghua-dict-enable))
+  ;; )

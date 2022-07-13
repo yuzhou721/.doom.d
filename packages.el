@@ -153,3 +153,6 @@
 (unpin! pyim)
 
 (package! valign)
+
+;;flutter debug error
+(unpin! lsp-dart)

@@ -571,29 +571,29 @@
   )
 
 ;;pyim设置
-;; (map! :after evil-org :map evil-org-mode-map
-;;       :i "C-i" #'pyim-convert-string-at-point)
-;; (map! :map minibuffer-local-map
-;;       "C-RET" #'pyim-cregexp-convert-at-point)
-;; (after! pyim
-;;   (setq! pyim-page-tooltip 'posframe)
-;;   (setq! pyim-english-input-switch-functions
-;;          '(pyim-probe-dynamic-english
-;;            pyim-probe-org-speed-commands
-;;            pyim-probe-isearch-mode
-;;            pyim-probe-program-mode))
-;;   (setq-default pyim-punctuation-half-width-functions
-;;                 '(pyim-probe-punctuation-line-beginning
-;;                   pyim-probe-punctuation-after-punctuation))
-;;   (setq! pyim-punctuation-translate-p '(auto yes no))
-;;   (pyim-isearch-mode 1)
-;;   (setq! pyim-page-length 5)
-  ;;cloudim 卡顿 禁用 测试
-  ;; (setq! pyim-cloudim 'baidu)
+(map! :map evil-insert-state-map
+      "C-i" #'pyim-convert-string-at-point)
+(map! :map minibuffer-local-map
+      "C-RET" #'pyim-cregexp-convert-at-point)
+(after! pyim
+  (setq! pyim-page-tooltip 'posframe)
+  (setq! pyim-english-input-switch-functions
+         '(pyim-probe-dynamic-english
+           pyim-probe-org-speed-commands
+           pyim-probe-isearch-mode
+           pyim-probe-program-mode))
+  (setq-default pyim-punctuation-half-width-functions
+                '(pyim-probe-punctuation-line-beginning
+                  pyim-probe-punctuation-after-punctuation))
+  (setq! pyim-punctuation-translate-p '(auto yes no))
+  (pyim-isearch-mode 1)
+  (setq! pyim-page-length 5)
+;;cloudim 卡顿 禁用 测试
+  (setq! pyim-cloudim 'baidu)
+)
 
-  ;; 字典
-  ;; (use-package! pyim-tsinghua-dict
-  ;;   :after pyim
-  ;;   :config
-  ;;   (pyim-tsinghua-dict-enable))
-  ;; )
+;;pyim字典
+(use-package! pyim-tsinghua-dict
+  :after pyim
+  :config
+  (pyim-tsinghua-dict-enable))

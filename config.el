@@ -570,7 +570,7 @@
 
 ;;pyim设置
 (map! :map evil-insert-state-map
-      "C-i" #'pyim-convert-string-at-point)
+      "M-j" #'pyim-convert-string-at-point)
 (map! :map minibuffer-local-map
       "C-RET" #'pyim-cregexp-convert-at-point)
 (after! pyim

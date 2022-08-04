@@ -279,7 +279,7 @@
   (setq org-roam-capture-ref-templates
         '(
           ("r" "ref" plain
-           "* %?"
+           "* Source \n ${ref} %?"
            :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:resource:\n")
            :unnarrowed t)
           ("a" "Annotation" plain
@@ -503,7 +503,7 @@
 
 ;;输入法自动切换
 (use-package! sis
-  :if (string= (getenv "GTK_IM_MODULE") "ibus")
+  :disabled (string= (getenv "GTK_IM_MODULE") "ibus")
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
   ;; (
@@ -572,6 +572,8 @@
 ;;pyim设置
 (map! :map evil-insert-state-map
       "M-j" #'pyim-convert-string-at-point)
+(map! :map evil-org-mode-map
+      :i "M-j" #'pyim-convert-string-at-point)
 (map! :map minibuffer-local-map
       "C-RET" #'pyim-cregexp-convert-at-point)
 (after! pyim

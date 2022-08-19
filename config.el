@@ -295,7 +295,7 @@
            :target (file+head "%<%Y-%m-%d>.org"
                               "#+title: %<%Y-%m-%d>\n#+filetags: :resource:\n"
                               )
-           :immediate-finish t
+           :prepend t
            )))
 
   :init
@@ -411,7 +411,6 @@
             (file+headline +org-capture-todo-file "Inbox")
             "* TODO %?\n %i\n %a"
             :prepend t
-            :immediate-finish t
             )
            ;; ("n" "Personal notes" entry
            ;;  (file+headline +org-capture-notes-file "Inbox")
@@ -438,21 +437,18 @@
            ("pa" "荣城 EPLUS")
            ("pat" "todo" entry
             (function +org-capture-central-project-todo-file)
-            "* TODO [#B] %?\n %i"
+            "* TODO [#B] %?\n %i \n %a"
             :heading "Tasks"
-            :immediate-finish t
             :prepend nil)
            ("pan" "notes" entry
             (function +org-capture-central-project-notes-file)
             "* %U %?\n %i\n %a"
             :heading "Notes"
-            :immediate-finish t
             :prepend t)
            ("pal" "changelog" entry
             (function +org-capture-central-project-changelog-file)
             "* %U %?\n %i\n %a"
             :heading "Changelog"
-            :immediate-finish t
             :prepend t)
            ;; ("b" "京东B2B")
            ;; ("bt" "Todo" entry

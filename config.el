@@ -294,7 +294,9 @@
            "* %?"
            :target (file+head "%<%Y-%m-%d>.org"
                               "#+title: %<%Y-%m-%d>\n#+filetags: :resource:\n"
-                              ))))
+                              )
+           :immediate-finish t
+           )))
 
   :init
   (org-roam-setup)
@@ -315,7 +317,7 @@
   (require 'eaf-demo)
   (require 'eaf-mindmap)
   (require 'eaf-pdf-viewer)
-;;  (require 'eaf-mermaid)
+  ;;  (require 'eaf-mermaid)
   (require 'eaf-camera)
   (require 'eaf-image-viewer)
   (require 'eaf-file-manager)
@@ -357,8 +359,6 @@
 (after! javascript-mode
   (set-company-backend! 'javascript-mode 'company-yasnippet 'company-tide))
 
-;;gpg密钥设置
-(setq! org-crypt-key "shoper2@163.com")
 
 ;; log4j设置 不然调用libnotify报错
 ;; (log4e:deflogger "alert" "%t [%l] %m" "%H:%M:%S")
@@ -401,14 +401,21 @@
   (org-log-done 'time)
   ;; (org-attach-id-dir "~/org/attach")
   :config
+
+  ;;gpg密钥设置
+  (setq! org-crypt-key "shoper2@163.com")
+  ;;设置capture 模板
   (setq! org-capture-templates
          '(
            ("t" "Personal todo" entry
             (file+headline +org-capture-todo-file "Inbox")
-            "* TODO %?\n %i\n %a" :prepend t)
-           ("n" "Personal notes" entry
-            (file+headline +org-capture-notes-file "Inbox")
-            "* %u %?\n%i\n%a" :prepend t)
+            "* TODO %?\n %i\n %a"
+            :prepend t
+            :immediate-finish t
+            )
+           ;; ("n" "Personal notes" entry
+           ;;  (file+headline +org-capture-notes-file "Inbox")
+           ;;  "* %u %?\n%i\n%a" :prepend t)
            ;; ("j" "Journal" entry
            ;;  (file+olp+datetree +org-capture-journal-file)
            ;;  "* %U %?\n%i\n%a" :prepend t)
@@ -416,50 +423,47 @@
            ;; these under {ProjectName}/{Tasks,Notes,Changelog} headings. They
            ;; support `:parents' to specify what headings to put them under, e.g.
            ;; :parents ("Projects")
-           ("a" "荣城ERP")
-           ("at" "todo" entry
+           ("p" "Projects")
+           ;; ("a" "荣城ERP")
+           ;; ("at" "todo" entry
+           ;;  (function +org-capture-central-project-todo-file)
+           ;;  "* TODO [#B] %?\n %i\n %a"
+           ;;  :heading "Tasks"
+           ;;  :prepend nil)
+           ;; ("an" "notes" entry
+           ;;  (function +org-capture-central-project-notes-file)
+           ;;  "* %U %?\n %i\n %a"
+           ;;  :heading "Notes"
+           ;;  :prepend t)
+           ("pa" "荣城 EPLUS")
+           ("pat" "todo" entry
             (function +org-capture-central-project-todo-file)
-            "* TODO [#B] %?\n %i\n %a"
+            "* TODO [#B] %?\n %i"
             :heading "Tasks"
-            :parents ("荣城 ERP")
+            :immediate-finish t
             :prepend nil)
-           ("an" "notes" entry
+           ("pan" "notes" entry
             (function +org-capture-central-project-notes-file)
             "* %U %?\n %i\n %a"
             :heading "Notes"
-            :parents ("荣城 ERP")
+            :immediate-finish t
             :prepend t)
-           ("b" "荣城EPLUS")
-           ("bt" "todo" entry
-            (function +org-capture-central-project-todo-file)
-            "* TODO [#B] %?\n %i\n %a"
-            :heading "Tasks"
-            :parents ("荣城 EPLUS")
-            :prepend nil)
-           ("bn" "notes" entry
-            (function +org-capture-central-project-notes-file)
-            "* %U %?\n %i\n %a"
-            :heading "Notes"
-            :parents ("荣城 EPLUS")
-            :prepend t)
-           ("bc" "changelog" entry
+           ("pal" "changelog" entry
             (function +org-capture-central-project-changelog-file)
             "* %U %?\n %i\n %a"
             :heading "Changelog"
-            :parents ("荣城 EPLUS")
+            :immediate-finish t
             :prepend t)
            ;; ("b" "京东B2B")
            ;; ("bt" "Todo" entry
            ;;  (function +org-capture-central-project-todo-file)
            ;;  "* TODO %?\n %i\n %a"
            ;;  :heading "Tasks"
-           ;;  :parents ("京东B2B")
            ;;  :prepend nil)
            ;; ("bn" "Notes" entry
            ;;  (function +org-capture-central-project-notes-file)
            ;;  "* %U %?\n %i\n %a"
            ;;  :heading "Notes"
-           ;;  :parents ("京东B2B")
            ;;  :prepend t)
            ))
   (add-hook! org-pomodoro-started-hook (lambda ()(org-pomodoro-notify "Pomodoro Started" "Go!Go!Go!")))
@@ -503,7 +507,7 @@
 
 ;;输入法自动切换
 (use-package! sis
-  :disabled (string= (getenv "GTK_IM_MODULE") "ibus")
+  ;; :disabled (string= (getenv "GTK_IM_MODULE") "ibus")
   ;; :hook
   ;; ;; enable the /follow context/ and /inline region/ mode for specific buffers
   ;; (
@@ -563,6 +567,7 @@
   :config
   (global-docstr-mode 1))
 
+;; habitica 任务管理
 (use-package! habitica
   :custom
   (habitica-uid "aae41ff9-302c-45eb-958b-761b30e59ef2")
@@ -570,31 +575,31 @@
   )
 
 ;;pyim设置
-(map! :map evil-insert-state-map
-      "M-j" #'pyim-convert-string-at-point)
-(map! :map evil-org-mode-map
-      :i "M-j" #'pyim-convert-string-at-point)
-(map! :map minibuffer-local-map
-      "C-RET" #'pyim-cregexp-convert-at-point)
-(after! pyim
-  (setq! pyim-page-tooltip 'posframe)
-  (setq! pyim-english-input-switch-functions
-         '(pyim-probe-dynamic-english
-           pyim-probe-org-speed-commands
-           pyim-probe-isearch-mode
-           pyim-probe-program-mode))
-  (setq-default pyim-punctuation-half-width-functions
-                '(pyim-probe-punctuation-line-beginning
-                  pyim-probe-punctuation-after-punctuation))
-  (setq! pyim-punctuation-translate-p '(auto yes no))
-  (pyim-isearch-mode 1)
-  (setq! pyim-page-length 5)
-;;cloudim 卡顿 禁用 测试
-  (setq! pyim-cloudim 'baidu)
-)
+;; (map! :map evil-insert-state-map
+;;       "M-j" #'pyim-convert-string-at-point)
+;; (map! :map evil-org-mode-map
+;;       :i "M-j" #'pyim-convert-string-at-point)
+;; (map! :map minibuffer-local-map
+;;       "C-RET" #'pyim-cregexp-convert-at-point)
+;; (after! pyim
+;;   (setq! pyim-page-tooltip 'posframe)
+;;   (setq! pyim-english-input-switch-functions
+;;          '(pyim-probe-dynamic-english
+;;            pyim-probe-org-speed-commands
+;;            pyim-probe-isearch-mode
+;;            pyim-probe-program-mode))
+;;   (setq-default pyim-punctuation-half-width-functions
+;;                 '(pyim-probe-punctuation-line-beginning
+;;                   pyim-probe-punctuation-after-punctuation))
+;;   (setq! pyim-punctuation-translate-p '(auto yes no))
+;;   (pyim-isearch-mode 1)
+;;   (setq! pyim-page-length 5)
+;; ;;cloudim 卡顿 禁用 测试
+;;   (setq! pyim-cloudim 'baidu)
+;; )
 
 ;;pyim字典
-(use-package! pyim-tsinghua-dict
-  :after pyim
-  :config
-  (pyim-tsinghua-dict-enable))
+;; (use-package! pyim-tsinghua-dict
+;;   :after pyim
+;;   :config
+;;   (pyim-tsinghua-dict-enable))

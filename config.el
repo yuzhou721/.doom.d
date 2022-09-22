@@ -279,13 +279,14 @@
   (setq org-roam-capture-ref-templates
         '(
           ("r" "ref" plain
-           "* Source \n ${ref} %?"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:resource:\n")
+           "* %?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:resource:\n Original Reference: [[${ref}][${title}]]\n -----\n")
            :unnarrowed t)
           ("a" "Annotation" plain
-           "${body}\n"
-           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:resource:\n")
-           ;; :immediate-finish t
+           "#+begin_quote \n ${body}\n #+end_quote \n %?"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:resource:\n Original Reference: [[${ref}]][${title}]\n -----\n")
+           :immediate-finish t
+           :empty-lines 1
            :unnarrowed t)
           ))
   (setq org-roam-dailies-capture-templates
@@ -409,7 +410,7 @@
          '(
            ("t" "Personal todo" entry
             (file+headline +org-capture-todo-file "Inbox")
-            "* TODO %?\n %i\n %a"
+            "* TODO [#B] %?\n %i"
             :prepend t
             )
            ;; ("n" "Personal notes" entry

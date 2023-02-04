@@ -288,7 +288,14 @@
            :immediate-finish t
            :empty-lines 1
            :unnarrowed t)
-          ))
+          ("o" "Copy from clipboard" plain
+           "%x"
+           :if-new (file+head "%<%Y%m%d%H%M%S>-${slug}.org" "#+title: ${title}\n#+date: %U\n#+filetags: :web:resource:\n Original Reference: [[${ref}]][${title}]\n -----\n")
+           :immediate-finish t
+           :empty-lines 1
+           :unnarrowed t)
+          )
+        )
   (setq org-roam-dailies-capture-templates
         `(
           ("d" "default" entry
@@ -600,3 +607,13 @@
 ;;   :after pyim
 ;;   :config
 ;;   (pyim-tsinghua-dict-enable))
+
+;; org-excalidraw
+;; (add-load-path! "~/code/elisp/org-excalidraw")
+(use-package! org-excalidraw
+  :after org
+  :custom
+  (org-excalidraw-directory "~/org/excalidraw")
+  :config
+  (org-excalidraw-initialize)
+  )

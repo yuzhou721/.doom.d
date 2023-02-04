@@ -156,3 +156,7 @@
 
 ;;flutter debug error
 (unpin! lsp-dart)
+
+;; excalidraw suppor
+(package! org-excalidraw
+  :recipe (:host github :repo "wdavew/org-excalidraw"))

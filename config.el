@@ -559,7 +559,7 @@
   ;; :init (setq org-media-note-use-org-ref t)
   :hook (org-mode .  org-media-note-mode)
   :bind (:map org-mode-map
-         ("C-c v" . org-media-note-hydra/body))  ;; 主功能入口
+              ("C-c v" . org-media-note-hydra/body))  ;; 主功能入口
   :config
 
   (setq org-media-note-screenshot-image-dir "~/org/Notes/imgs/")  ;; 用于存储视频截图的目录
@@ -567,9 +567,9 @@
   )
 
 ;;文档注释
-(use-package! docstr
-  :config
-  (global-docstr-mode 1))
+;; (use-package! docstr
+;;   :config
+;;   (global-docstr-mode 1))
 
 ;; habitica 任务管理
 (use-package! habitica
@@ -579,34 +579,34 @@
   )
 
 ;;pyim设置
-;; (map! :map evil-insert-state-map
-;;       "M-j" #'pyim-convert-string-at-point)
-;; (map! :map evil-org-mode-map
-;;       :i "M-j" #'pyim-convert-string-at-point)
+(map! :map evil-insert-state-map
+      "M-o" #'pyim-convert-string-at-point)
+(map! :map evil-org-mode-map
+      :i "M-o" #'pyim-convert-string-at-point)
 ;; (map! :map minibuffer-local-map
 ;;       "C-RET" #'pyim-cregexp-convert-at-point)
-;; (after! pyim
-;;   (setq! pyim-page-tooltip 'posframe)
-;;   (setq! pyim-english-input-switch-functions
-;;          '(pyim-probe-dynamic-english
-;;            pyim-probe-org-speed-commands
-;;            pyim-probe-isearch-mode
-;;            pyim-probe-program-mode))
-;;   (setq-default pyim-punctuation-half-width-functions
-;;                 '(pyim-probe-punctuation-line-beginning
-;;                   pyim-probe-punctuation-after-punctuation))
-;;   (setq! pyim-punctuation-translate-p '(auto yes no))
-;;   (pyim-isearch-mode 1)
-;;   (setq! pyim-page-length 5)
-;; ;;cloudim 卡顿 禁用 测试
-;;   (setq! pyim-cloudim 'baidu)
-;; )
+(after! pyim
+  (setq! pyim-page-tooltip 'posframe)
+  (setq! pyim-english-input-switch-functions
+         '(pyim-probe-dynamic-english
+           pyim-probe-org-speed-commands
+           pyim-probe-isearch-mode
+           pyim-probe-program-mode))
+  (setq-default pyim-punctuation-half-width-functions
+                '(pyim-probe-punctuation-line-beginning
+                  pyim-probe-punctuation-after-punctuation))
+  (setq! pyim-punctuation-translate-p '(auto yes no))
+  (pyim-isearch-mode 1)
+  (setq! pyim-page-length 5)
+  ;;cloudim 卡顿 禁用 测试
+  (setq! pyim-cloudim 'baidu)
+  )
 
 ;;pyim字典
-;; (use-package! pyim-tsinghua-dict
-;;   :after pyim
-;;   :config
-;;   (pyim-tsinghua-dict-enable))
+(use-package! pyim-tsinghua-dict
+  :after pyim
+  :config
+  (pyim-tsinghua-dict-enable))
 
 ;; org-excalidraw
 ;; (add-load-path! "~/code/elisp/org-excalidraw")
